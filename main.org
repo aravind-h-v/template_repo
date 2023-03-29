@@ -2,8 +2,9 @@
 
 ** Files to add:
 #+begin_src conf :tangle git_add.txt
-main.org
-.gitignore
+  main.org
+  .gitignore
+  README.org
 #+end_src
 
 #+begin_src sh :shebang #!/bin/sh :tangle git_add.sh :results output
@@ -17,6 +18,8 @@ main.org
   .#main.org
   .main.org.~undo-tree~
   #main.org#
+  main.org~
+  .README.org.~undo-tree~
 #+end_src
 
 #+begin_src sh :shebang #!/bin/sh :tangle rm.sh :results output
@@ -30,11 +33,12 @@ main.org
 #+begin_src conf :tangle .gitignore
   git_add.sh
   git_add.txt
-  main.org~
   rm.sh
   rm.txt
   tmp.sh
   message.txt
+  shrc_activate.sh
+  shrc_install.sh
 #+end_src
 
 ** Make all the changes and check status:
@@ -45,18 +49,23 @@ main.org
 #+end_src
 
 #+RESULTS:
-: removed '.main.org.~undo-tree~'
-: On branch main
-: Your branch is up to date with 'origin/main'.
-: 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   main.org
-: 
+#+begin_example
+removed '.main.org.~undo-tree~'
+removed '.README.org.~undo-tree~'
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   .gitignore
+	new file:   README.org
+	modified:   main.org
+
+#+end_example
 
 ** Commit the changes:
 #+begin_src conf :tangle message.txt
-  First commit after writing the controlling codes
+  Started writing the env setup stuff
 #+end_src
 
 #+begin_src sh :shebang #!/bin/sh :results output
@@ -71,3 +80,7 @@ main.org
   git commit -m "$(cat 'message.txt')"
   git push 
 #+end_src
+
+#+RESULTS:
+: [main 9f14c50] First commit after writing the controlling codes
+:  1 file changed, 11 insertions(+), 16 deletions(-)
