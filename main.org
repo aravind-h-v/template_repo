@@ -56,10 +56,6 @@ Changes to be committed:
 	new file:   .gitignore
 	new file:   main.org
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	
-
 #+end_example
 
 ** Commit the changes:
@@ -69,4 +65,14 @@ Untracked files:
 
 #+begin_src sh :shebang #!/bin/sh :results output
   git commit -m "$(cat 'message.txt')"
+#+end_src
+
+#+RESULTS:
+: [main (root-commit) 51aad56] First commit after writing the controlling codes
+:  2 files changed, 79 insertions(+)
+:  create mode 100644 .gitignore
+:  create mode 100644 main.org
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  git push 
 #+end_src
