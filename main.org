@@ -1,0 +1,72 @@
+* Git management related:
+
+** Files to add:
+#+begin_src conf :tangle git_add.txt
+main.org
+.gitignore
+#+end_src
+
+#+begin_src sh :shebang #!/bin/sh :tangle git_add.sh :results output
+  sed "s/^/(git add '/g ; s/\$/');/g" 'git_add.txt' | sh
+#+end_src
+
+#+RESULTS:
+
+** Files to remove:
+#+begin_src conf :tangle rm.txt
+  .#main.org
+  .main.org.~undo-tree~
+  #main.org#
+#+end_src
+
+#+begin_src sh :shebang #!/bin/sh :tangle rm.sh :results output
+  sed "s/^/(rm -vf -- '/g ; s/\$/');/g" 'rm.txt' | sh
+#+end_src
+
+#+RESULTS:
+: removed '.#main.org'
+
+** Files to ignore:
+#+begin_src conf :tangle .gitignore
+  git_add.sh
+  git_add.txt
+  main.org~
+  rm.sh
+  rm.txt
+  tmp.sh
+  message.txt
+#+end_src
+
+** Make all the changes and check status:
+#+begin_src sh :shebang #!/bin/sh :results output
+  ./git_add.sh
+  ./rm.sh
+  git status
+#+end_src
+
+#+RESULTS:
+#+begin_example
+removed '.main.org.~undo-tree~'
+On branch main
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+	new file:   .gitignore
+	new file:   main.org
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	
+
+#+end_example
+
+** Commit the changes:
+#+begin_src conf :tangle message.txt
+  First commit after writing the controlling codes
+#+end_src
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  git commit -m "$(cat 'message.txt')"
+#+end_src
