@@ -1,19 +1,15 @@
 * Git management related:
 
-** Files to add:
+** List of files to add, remove and ignore:
+
+*** Files to add:
 #+begin_src conf :tangle git_add.txt
   main.org
   .gitignore
   README.org
 #+end_src
 
-#+begin_src sh :shebang #!/bin/sh :tangle git_add.sh :results output
-  sed "s/^/(git add '/g ; s/\$/');/g" 'git_add.txt' | sh
-#+end_src
-
-#+RESULTS:
-
-** Files to remove:
+*** Files to remove:
 #+begin_src conf :tangle rm.txt
   .#main.org
   .main.org.~undo-tree~
@@ -22,14 +18,7 @@
   .README.org.~undo-tree~
 #+end_src
 
-#+begin_src sh :shebang #!/bin/sh :tangle rm.sh :results output
-  sed "s/^/(rm -vf -- '/g ; s/\$/');/g" 'rm.txt' | sh
-#+end_src
-
-#+RESULTS:
-: removed '.#main.org'
-
-** Files to ignore:
+*** Files to ignore:
 #+begin_src conf :tangle .gitignore
   git_add.sh
   git_add.txt
@@ -39,6 +28,23 @@
   message.txt
   shrc_activate.sh
   shrc_install.sh
+#+end_src
+
+*** The commit message:
+#+begin_src conf :tangle message.txt
+  Slight reorganization
+#+end_src
+
+** The actual scripts to do the dirty work:
+
+*** Files to add:
+#+begin_src sh :shebang #!/bin/sh :tangle git_add.sh :results output
+  sed "s/^/(git add '/g ; s/\$/');/g" 'git_add.txt' | sh
+#+end_src
+
+*** Files to remove:
+#+begin_src sh :shebang #!/bin/sh :tangle rm.sh :results output
+  sed "s/^/(rm -vf -- '/g ; s/\$/');/g" 'rm.txt' | sh
 #+end_src
 
 ** Make all the changes and check status:
@@ -51,7 +57,6 @@
 #+RESULTS:
 #+begin_example
 removed '.main.org.~undo-tree~'
-removed '.README.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
@@ -63,24 +68,19 @@ Changes to be committed:
 
 #+end_example
 
-** Commit the changes:
-#+begin_src conf :tangle message.txt
-  Started writing the env setup stuff
-#+end_src
-
-#+begin_src sh :shebang #!/bin/sh :results output
-  git commit -m "$(cat 'message.txt')"
-#+end_src
-
-#+RESULTS:
-: [main b498dad] First commit after writing the controlling codes
-:  1 file changed, 10 insertions(+), 4 deletions(-)
-
+** Commit the changes and push:
 #+begin_src sh :shebang #!/bin/sh :results output
   git commit -m "$(cat 'message.txt')"
   git push 
 #+end_src
 
 #+RESULTS:
-: [main 9f14c50] First commit after writing the controlling codes
-:  1 file changed, 11 insertions(+), 16 deletions(-)
+: On branch main
+: Your branch is ahead of 'origin/main' by 1 commit.
+:   (use "git push" to publish your local commits)
+: 
+: Untracked files:
+:   (use "git add <file>..." to include in what will be committed)
+: 	.#main.org
+: 
+: nothing added to commit but untracked files present (use "git add" to track)
