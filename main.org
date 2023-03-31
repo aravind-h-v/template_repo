@@ -2,6 +2,11 @@
 
 ** List of files to add, remove and ignore:
 
+*** The commit message:
+#+begin_src conf :tangle message.txt
+  Rearrangement and management stuff
+#+end_src
+
 *** Files to add:
 #+begin_src conf :tangle git_add.txt
   main.org
@@ -30,11 +35,6 @@
   shrc_install.sh
 #+end_src
 
-*** The commit message:
-#+begin_src conf :tangle message.txt
-  Slight reorganization
-#+end_src
-
 ** The actual scripts to do the dirty work:
 
 *** Files to add:
@@ -48,6 +48,16 @@
 #+end_src
 
 ** Make all the changes and check status:
+
+*** This file stuff:
+#+begin_src emacs-lisp :results output
+  (save-buffer) 
+  (org-babel-tangle)
+#+end_src
+
+#+RESULTS:
+
+*** Run the git management parts:
 #+begin_src sh :shebang #!/bin/sh :results output
   ./git_add.sh
   ./rm.sh
@@ -55,18 +65,15 @@
 #+end_src
 
 #+RESULTS:
-#+begin_example
-removed '.main.org.~undo-tree~'
-On branch main
-Your branch is up to date with 'origin/main'.
-
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-	modified:   .gitignore
-	new file:   README.org
-	modified:   main.org
-
-#+end_example
+: removed '.#main.org'
+: removed '.main.org.~undo-tree~'
+: On branch main
+: Your branch is up to date with 'origin/main'.
+: 
+: Changes to be committed:
+:   (use "git restore --staged <file>..." to unstage)
+: 	modified:   main.org
+: 
 
 ** Commit the changes and push:
 #+begin_src sh :shebang #!/bin/sh :results output
@@ -75,12 +82,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: On branch main
-: Your branch is ahead of 'origin/main' by 1 commit.
-:   (use "git push" to publish your local commits)
-: 
-: Untracked files:
-:   (use "git add <file>..." to include in what will be committed)
-: 	.#main.org
-: 
-: nothing added to commit but untracked files present (use "git add" to track)
+: [main c7e7c36] Slight reorganization
+:  1 file changed, 32 insertions(+), 32 deletions(-)
