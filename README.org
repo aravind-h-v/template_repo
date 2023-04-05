@@ -3,6 +3,9 @@ Random stuff accumulated here. Also has python env setup.
 
 * Important links:
 
+** Interesting repo for semantic segmentation:
+https://github.com/facebookresearch/segment-anything.git
+
 ** Colab notebook for automatic1111 SD web UI:
 https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/main/fast_stable_diffusion_AUTOMATIC1111.ipynb
 
