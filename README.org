@@ -101,3 +101,12 @@ https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/m
   . /opt/anaconda/bin/activate
   conda activate myenv
 #+end_src
+
+* COMMENT Shell and elisp stuff for easy management:
+
+** This file stuff:
+#+begin_src emacs-lisp :results output
+  (save-buffer) 
+  (save-some-buffers) 
+  (org-babel-tangle)
+#+end_src

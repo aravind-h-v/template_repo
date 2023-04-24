@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Rearrangement and management stuff
+  Added some convenience stuff to readme.org
 #+end_src
 
 *** Files to add:
@@ -66,13 +66,13 @@
 #+end_src
 
 #+RESULTS:
-: removed '.main.org.~undo-tree~'
+: removed '.README.org.~undo-tree~'
 : On branch main
 : Your branch is up to date with 'origin/main'.
 : 
 : Changes to be committed:
 :   (use "git restore --staged <file>..." to unstage)
-: 	modified:   main.org
+: 	modified:   README.org
 : 
 
 ** Commit the changes and push:
@@ -82,5 +82,5 @@
 #+end_src
 
 #+RESULTS:
-: [main 306c0c3] Rearrangement and management stuff
-:  1 file changed, 26 insertions(+), 26 deletions(-)
+: [main 679ba66] Rearrangement and management stuff
+:  1 file changed, 3 insertions(+)
