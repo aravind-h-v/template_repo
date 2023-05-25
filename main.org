@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added some convenience stuff to readme.org
+  More python package install updates
 #+end_src
 
 *** Files to add:
@@ -66,14 +66,18 @@
 #+end_src
 
 #+RESULTS:
-: removed '.README.org.~undo-tree~'
-: On branch main
-: Your branch is up to date with 'origin/main'.
-: 
-: Changes to be committed:
-:   (use "git restore --staged <file>..." to unstage)
-: 	modified:   README.org
-: 
+#+begin_example
+removed '.main.org.~undo-tree~'
+removed '.README.org.~undo-tree~'
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   README.org
+	modified:   main.org
+
+#+end_example
 
 ** Commit the changes and push:
 #+begin_src sh :shebang #!/bin/sh :results output
@@ -82,5 +86,5 @@
 #+end_src
 
 #+RESULTS:
-: [main 679ba66] Rearrangement and management stuff
-:  1 file changed, 3 insertions(+)
+: [main 647c892] Added some convenience stuff to readme.org
+:  2 files changed, 14 insertions(+), 5 deletions(-)
