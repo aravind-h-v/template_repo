@@ -12,6 +12,109 @@ https://github.com/facebookresearch/segment-anything.git
 ** Colab notebook for automatic1111 SD web UI:
 https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/main/fast_stable_diffusion_AUTOMATIC1111.ipynb
 
+* Cuda installation for ubuntu:
+
+** Main link:
+https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu
+
+** COMMENT Sample:
+#+begin_src sh :shebang #!/bin/sh :results output
+#+end_src
+
+** Verify You Have a CUDA-Capable GPU
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  lspci | grep -i nvidia
+#+end_src
+
+#+RESULTS:
+: 01:00.0 VGA compatible controller: NVIDIA Corporation GA104M [GeForce RTX 3070 Mobile / Max-Q] (rev a1)
+: 01:00.1 Audio device: NVIDIA Corporation GA104 High Definition Audio Controller (rev a1)
+
+** Verify You Have a Supported Version of Linux
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  uname -m && cat /etc/*release
+#+end_src
+
+#+RESULTS:
+#+begin_example
+x86_64
+DISTRIB_ID=Pop
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Pop!_OS 22.04 LTS"
+NAME="Pop!_OS"
+VERSION="22.04 LTS"
+ID=pop
+ID_LIKE="ubuntu debian"
+PRETTY_NAME="Pop!_OS 22.04 LTS"
+VERSION_ID="22.04"
+HOME_URL="https://pop.system76.com"
+SUPPORT_URL="https://support.system76.com"
+BUG_REPORT_URL="https://github.com/pop-os/pop/issues"
+PRIVACY_POLICY_URL="https://system76.com/privacy"
+VERSION_CODENAME=jammy
+UBUNTU_CODENAME=jammy
+LOGO=distributor-logo-pop-os
+#+end_example
+
+** Verify the System Has gcc Installed
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  gcc --version
+#+end_src
+
+#+RESULTS:
+: gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0
+: Copyright (C) 2021 Free Software Foundation, Inc.
+: This is free software; see the source for copying conditions.  There is NO
+: warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+: 
+
+** Verify the System has the Correct Kernel Headers and Development Packages Installed
+
+#+begin_src sh :shebang #!/bin/sh :results output
+  uname -r
+#+end_src
+
+#+RESULTS:
+: 6.2.6-76060206-generic
+
+** Remove Outdated Signing Key:
+#+begin_src sh :shebang #!/bin/sh :results output
+  sudo apt-key del 7fa2af80
+#+end_src
+
+** Enroll the new signing key manually:
+#+begin_src sh :shebang #!/bin/sh :results output
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  wget "https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/cuda-keyring_1.1-1_all.deb"
+  sudo dpkg -i 'cuda-keyring_1.1-1_all.deb'
+#+end_src
+
+** Write the repo:
+#+begin_src sh :shebang #!/bin/sh :results output
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/ /" > "/etc/apt/sources.list.d/cuda-${DISTRO}-${ARCH}.list"
+#+end_src
+
+** Ping the repo:
+#+begin_src sh :shebang #!/bin/sh :results output
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  wget "https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/cuda-${DISTRO}.pin"
+  sudo mv "cuda-${DISTRO}.pin" '/etc/apt/preferences.d/cuda-repository-pin-600'
+#+end_src
+
+** Update and install:
+#+begin_src sh :shebang #!/bin/sh :results output
+  sudo apt-get update
+  sudo apt-get install cuda
+#+end_src
+
 * ENV Setup with conda:
 
 ** Activate base anaconda:
@@ -161,3 +264,6 @@ https://colab.research.google.com/github/TheLastBen/fast-stable-diffusion/blob/m
 #+end_src
 
 #+RESULTS:
+
+
+

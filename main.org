@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  More python package install updates
+  Added nvidia cuda stuff
 #+end_src
 
 *** Files to add:
@@ -77,6 +77,10 @@ Changes to be committed:
 	modified:   README.org
 	modified:   main.org
 
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	shrc_install_dreambooth_full.sh
+
 #+end_example
 
 ** Commit the changes and push:
@@ -86,5 +90,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main 647c892] Added some convenience stuff to readme.org
-:  2 files changed, 14 insertions(+), 5 deletions(-)
+: [main 22efd08] More python package install updates
+:  2 files changed, 86 insertions(+), 31 deletions(-)
