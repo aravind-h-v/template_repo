@@ -4,13 +4,14 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added nvidia cuda stuff
+  Added some git stuff.
 #+end_src
 
 *** Files to add:
 #+begin_src conf :tangle git_add.txt
-  main.org
+  get_repo.sh
   .gitignore
+  main.org
   README.org
 #+end_src
 
@@ -68,18 +69,17 @@
 #+RESULTS:
 #+begin_example
 removed '.main.org.~undo-tree~'
-removed '.README.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	modified:   README.org
+	new file:   get_repo.sh
 	modified:   main.org
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	shrc_install_dreambooth_full.sh
 
 #+end_example
 
@@ -90,5 +90,5 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 22efd08] More python package install updates
-:  2 files changed, 86 insertions(+), 31 deletions(-)
+: [main 0691b21] Added nvidia cuda stuff
+:  2 files changed, 113 insertions(+), 3 deletions(-)

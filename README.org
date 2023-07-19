@@ -21,7 +21,7 @@ https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu
 #+begin_src sh :shebang #!/bin/sh :results output
 #+end_src
 
-** Verify You Have a CUDA-Capable GPU
+** Verify You Have a CUDA-Capable GPU:
 
 #+begin_src sh :shebang #!/bin/sh :results output
   lspci | grep -i nvidia
@@ -31,7 +31,7 @@ https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#ubuntu
 : 01:00.0 VGA compatible controller: NVIDIA Corporation GA104M [GeForce RTX 3070 Mobile / Max-Q] (rev a1)
 : 01:00.1 Audio device: NVIDIA Corporation GA104 High Definition Audio Controller (rev a1)
 
-** Verify You Have a Supported Version of Linux
+** Verify You Have a Supported Version of Linux:
 
 #+begin_src sh :shebang #!/bin/sh :results output
   uname -m && cat /etc/*release
@@ -59,7 +59,7 @@ UBUNTU_CODENAME=jammy
 LOGO=distributor-logo-pop-os
 #+end_example
 
-** Verify the System Has gcc Installed
+** Verify the System Has gcc Installed:
 
 #+begin_src sh :shebang #!/bin/sh :results output
   gcc --version
@@ -72,7 +72,7 @@ LOGO=distributor-logo-pop-os
 : warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 : 
 
-** Verify the System has the Correct Kernel Headers and Development Packages Installed
+** Verify the System has the Correct Kernel Headers and Development Packages Installed:
 
 #+begin_src sh :shebang #!/bin/sh :results output
   uname -r
@@ -113,6 +113,27 @@ LOGO=distributor-logo-pop-os
 #+begin_src sh :shebang #!/bin/sh :results output
   sudo apt-get update
   sudo apt-get install cuda
+  sudo apt-get install cuda-toolkit
+#+end_src
+
+* Code to download git stuff:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./get_repo.sh
+  URL="${1}"
+  D1="$(basename -- "$(dirname -- "${URL}")")"
+  D2="$(basename -- "${URL}" | sed 's@\.git$@@g')"
+  DIR_PREFIX="${HOME}/GITHUB/${D1}/"
+  DIR_FINAL="${DIR_PREFIX}/${D2}"
+  mkdir -pv -- "${DIR_PREFIX}"
+  cd "${DIR_PREFIX}"
+  git clone "${URL}"
+  cd "${DIR_FINAL}"
+  git pull
+#+end_src
+
+* Activate ENV:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_activate.sh
+  . /opt/anaconda/bin/activate
+  conda activate myenv
 #+end_src
 
 * ENV Setup with conda:
@@ -248,11 +269,6 @@ LOGO=distributor-logo-pop-os
   ;
 #+end_src
 
-** Activate ENV:
-#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_activate.sh
-  . /opt/anaconda/bin/activate
-  conda activate myenv
-#+end_src
 
 * COMMENT Shell and elisp stuff for easy management:
 
@@ -264,6 +280,3 @@ LOGO=distributor-logo-pop-os
 #+end_src
 
 #+RESULTS:
-
-
-
