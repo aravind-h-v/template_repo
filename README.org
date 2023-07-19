@@ -3,6 +3,9 @@ Random stuff accumulated here. Also has python env setup.
 
 * Important links:
 
+** Anaconda python link:
+https://repo.anaconda.com/archive/Anaconda3-2023.07-1-Linux-x86_64.sh
+
 ** Prompt reweighting and compel library:
 https://huggingface.co/docs/diffusers/using-diffusers/weighted_prompts
 
@@ -114,6 +117,24 @@ LOGO=distributor-logo-pop-os
   sudo apt-get update
   sudo apt-get install cuda
   sudo apt-get install cuda-toolkit
+#+end_src
+
+* Install basic OS stuff:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
+  sudo apt-get 'install' \
+      'cpio' \
+      'zstd' \
+      'squashfs-tools' \
+      'aria2' \
+      'git-lfs' \
+      'fizsh' \
+      'fish' \
+  ;
+#+end_src
+
+* Download anaconda python:
+#+begin_src sh :shebang #!/bin/sh :results output
+  aria2c -c -j16 -x16 'https://repo.anaconda.com/archive/Anaconda3-2023.07-1-Linux-x86_64.sh'
 #+end_src
 
 * Code to download git stuff:

@@ -78,9 +78,6 @@ Changes to be committed:
 	new file:   get_repo.sh
 	modified:   main.org
 
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
 #+end_example
 
 ** Commit the changes and push:
@@ -90,5 +87,6 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 0691b21] Added nvidia cuda stuff
-:  2 files changed, 113 insertions(+), 3 deletions(-)
+: [main 6ed9789] Added some git stuff.
+:  3 files changed, 42 insertions(+), 18 deletions(-)
+:  create mode 100755 get_repo.sh
