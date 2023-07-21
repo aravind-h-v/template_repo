@@ -104,7 +104,7 @@ LOGO=distributor-logo-pop-os
   echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/ /" > "/etc/apt/sources.list.d/cuda-${DISTRO}-${ARCH}.list"
 #+end_src
 
-** Ping the repo:
+** Pin the repo:
 #+begin_src sh :shebang #!/bin/sh :results output
   DISTRO='ubuntu2204'
   ARCH='x86_64'

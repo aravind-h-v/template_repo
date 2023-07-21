@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added some git stuff.
+  Minor typo fixes
 #+end_src
 
 *** Files to add:
@@ -69,13 +69,13 @@
 #+RESULTS:
 #+begin_example
 removed '.main.org.~undo-tree~'
+removed '.README.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
 	modified:   README.org
-	new file:   get_repo.sh
 	modified:   main.org
 
 #+end_example
@@ -87,6 +87,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main 6ed9789] Added some git stuff.
-:  3 files changed, 42 insertions(+), 18 deletions(-)
-:  create mode 100755 get_repo.sh
+: [main a1c478a] Added some git stuff.
+:  2 files changed, 24 insertions(+), 5 deletions(-)
