@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Minor typo fixes
+  Routine package stuff update
 #+end_src
 
 *** Files to add:
@@ -78,6 +78,10 @@ Changes to be committed:
 	modified:   README.org
 	modified:   main.org
 
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	shrc_install_dreambooth_full.sh
+
 #+end_example
 
 ** Commit the changes and push:
@@ -87,5 +91,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main a1c478a] Added some git stuff.
-:  2 files changed, 24 insertions(+), 5 deletions(-)
+: [main 3bc9231] Minor typo fixes
+:  2 files changed, 5 insertions(+), 6 deletions(-)

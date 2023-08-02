@@ -122,13 +122,15 @@ LOGO=distributor-logo-pop-os
 * Install basic OS stuff:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
   sudo apt-get 'install' \
-      'cpio' \
-      'zstd' \
-      'squashfs-tools' \
       'aria2' \
-      'git-lfs' \
-      'fizsh' \
+      'build-essential' \
+      'cpio' \
+      'cuda-toolkit-11-7' \
       'fish' \
+      'fizsh' \
+      'git-lfs' \
+      'squashfs-tools' \
+      'zstd' \
   ;
 #+end_src
 
@@ -137,27 +139,33 @@ LOGO=distributor-logo-pop-os
   aria2c -c -j16 -x16 'https://repo.anaconda.com/archive/Anaconda3-2023.07-1-Linux-x86_64.sh'
 #+end_src
 
-* Code to download git stuff:
-#+begin_src sh :shebang #!/bin/sh :results output :tangle ./get_repo.sh
-  URL="${1}"
-  D1="$(basename -- "$(dirname -- "${URL}")")"
-  D2="$(basename -- "${URL}" | sed 's@\.git$@@g')"
-  DIR_PREFIX="${HOME}/GITHUB/${D1}/"
-  DIR_FINAL="${DIR_PREFIX}/${D2}"
-  mkdir -pv -- "${DIR_PREFIX}"
-  cd "${DIR_PREFIX}"
-  git clone "${URL}"
-  cd "${DIR_FINAL}"
-  git pull
-#+end_src
-
 * Activate ENV:
+
+** Activate the env:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_activate.sh
   . /opt/anaconda/bin/activate
   conda activate myenv
 #+end_src
 
+** Important env variables:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_activate.sh
+  export PATH="/usr/local/cuda-11.7/bin/:${PATH}"
+  export LD_LIBRARY_PATH="/usr/local/cuda-11.7/lib64:${LD_LIBRARY_PATH}"
+#+end_src
+
+** Execute fizsh:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_activate.sh
+  exec fizsh
+#+end_src
+
 * ENV Setup with conda:
+
+** Current working directory:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
+  SRC_DIR="$(dirname -- "$(realpath -- "${0}")")"
+  cd "${SRC_DIR}"
+  pwd
+#+end_src
 
 ** Activate base anaconda:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
@@ -180,6 +188,7 @@ LOGO=distributor-logo-pop-os
       'cython' \
       'ipython' \
       'jinja2' \
+      'Jinja2' \
       'jupyter' \
       'jupyterlab' \
       'matplotlib' \
@@ -187,8 +196,11 @@ LOGO=distributor-logo-pop-os
       'numpy' \
       'opencv' \
       'pandas' \
+      'pillow' \
       'pyqt' \
-      'python=3.10' \
+      'python' \
+      'python' \
+      'requests' \
       'scikit-image' \
       'scikit-learn' \
       'scikit-learn-intelex' \
@@ -200,13 +212,59 @@ LOGO=distributor-logo-pop-os
 ** Install conda-forge:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
   conda install -c conda-forge \
-      'termcolor' \
-      'streamlit' \
+      'gradio' \
+      'ninja' \
+      'opencv' \
+      'protobuf' \
       'pudb' \
+      'setuptools' \
+      'streamlit' \
+      'termcolor' \
   ;
 #+end_src
 
-** Updated pip stuff - 1:
+** Download and install packages from GIT:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
+  get_repo(){
+      URL="${1}"
+      D1="$(basename -- "$(dirname -- "${URL}")")"
+      D2="$(basename -- "${URL}" | sed 's@\.git$@@g')"
+      DIR_PREFIX="${HOME}/GITHUB/${D1}/"
+      DIR_FINAL="${DIR_PREFIX}/${D2}"
+      mkdir -pv -- "${DIR_PREFIX}"
+      cd "${DIR_PREFIX}"
+      git clone "${URL}"
+      cd "${DIR_FINAL}"
+      git pull
+  }
+
+  get_repo 'https://github.com/huggingface/diffusers.git'
+  pip install -e .
+
+  get_repo 'https://github.com/pharmapsychotic/clip-interrogator.git'
+  pip install -e .
+
+  get_repo 'https://github.com/patrickvonplaten/controlnet_aux.git'
+  pip install -e .
+
+  get_repo 'https://github.com/facebookresearch/segment-anything.git'
+  pip install -e .
+
+  get_repo 'https://github.com/SysCV/sam-hq.git'
+  pip install -e .
+
+  get_repo 'https://github.com/IDEA-Research/GroundingDINO.git'
+  pip install -e .
+
+  get_repo 'https://github.com/IDEA-Research/Grounded-Segment-Anything.git'
+  git submodule update --init --recursive
+  cd ./segment_anything
+  pip install -e .
+
+  get_repo 'https://github.com/Hzzone/pytorch-openpose.git'
+#+end_src
+
+** COMMENT Updated pip stuff - 1:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install.sh
   pip install \
       --extra-index-url 'https://developer.download.nvidia.com/compute/redist' \
@@ -245,7 +303,7 @@ LOGO=distributor-logo-pop-os
   ;
 #+end_src
 
-** Updated pip stuff - 2:
+** COMMENT Updated pip stuff - 2:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install_dreambooth_full.sh
   pip install -U \
       'accelerate' \
@@ -290,6 +348,31 @@ LOGO=distributor-logo-pop-os
   ;
 #+end_src
 
+** Updated pip stuff - 3:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./shrc_install_dreambooth_full.sh
+  pip install \
+      'accelerate>=0.16.0' \
+      'addict' \
+      'datasets' \
+      'fairscale' \
+      'ftfy' \
+      'gdown' \
+      'huggingface_hub' \
+      'mediapipe' \
+      'nltk' \
+      'onnxruntime' \
+      'pycocotools' \
+      'PyYAML' \
+      'supervision' \
+      'tensorboard' \
+      'timm' \
+      'torch' \
+      'torchvision' \
+      'transformers>=4.25.1' \
+      'xformers' \
+      'yapf' \
+  ;
+#+end_src
 
 * COMMENT Shell and elisp stuff for easy management:
 
