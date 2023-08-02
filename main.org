@@ -80,7 +80,6 @@ Changes to be committed:
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
-	shrc_install_dreambooth_full.sh
 
 #+end_example
 
@@ -91,5 +90,5 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 3bc9231] Minor typo fixes
-:  2 files changed, 5 insertions(+), 6 deletions(-)
+: [main 012e85f] Routine package stuff update
+:  2 files changed, 114 insertions(+), 27 deletions(-)

@@ -188,17 +188,14 @@ LOGO=distributor-logo-pop-os
       'cython' \
       'ipython' \
       'jinja2' \
-      'Jinja2' \
       'jupyter' \
       'jupyterlab' \
       'matplotlib' \
       'nbconvert' \
       'numpy' \
-      'opencv' \
       'pandas' \
       'pillow' \
       'pyqt' \
-      'python' \
       'python' \
       'requests' \
       'scikit-image' \
@@ -255,6 +252,8 @@ LOGO=distributor-logo-pop-os
 
   get_repo 'https://github.com/IDEA-Research/GroundingDINO.git'
   pip install -e .
+
+  get_repo 'https://github.com/GoGoDuck912/Self-Correction-Human-Parsing.git'
 
   get_repo 'https://github.com/IDEA-Research/Grounded-Segment-Anything.git'
   git submodule update --init --recursive
