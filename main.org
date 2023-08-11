@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Routine package stuff update
+  Added parts of nvidia container toolkit
 #+end_src
 
 *** Files to add:
@@ -13,7 +13,9 @@
   .gitignore
   main.org
   README.org
+  nvidia_container_toolkit.org
 #+end_src
+
 
 *** Files to remove:
 #+begin_src conf :tangle rm.txt
@@ -22,6 +24,8 @@
   #main.org#
   main.org~
   .README.org.~undo-tree~
+  .nvidia_container_toolkit.org.~undo-tree~
+  nvidia_container_toolkit.org~
 #+end_src
 
 *** Files to ignore:
@@ -69,13 +73,11 @@
 #+RESULTS:
 #+begin_example
 removed '.main.org.~undo-tree~'
-removed '.README.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   README.org
 	modified:   main.org
 
 Untracked files:
@@ -90,5 +92,5 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 012e85f] Routine package stuff update
-:  2 files changed, 114 insertions(+), 27 deletions(-)
+: [main 9d33c51] Routine package stuff update
+:  2 files changed, 4 insertions(+), 6 deletions(-)
