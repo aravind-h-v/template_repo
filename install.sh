@@ -1,25 +1,11 @@
 #!/usr/bin/sh
 cd "$('dirname' '--' "${0}")"
-'sudo' 'apt-get' 'update'
+pwd
 
-sudo apt-get install -y \
-    'nvidia-container-toolkit-base' \
-    'aria2' \
-    'zstd' \
-    'cpio' \
-;
-
-'nvidia-ctk' '--version'
-
-'sudo' 'nvidia-ctk' 'cdi' 'generate' '--output=/etc/cdi/nvidia.yaml'
-'sudo' 'nvidia-ctk' 'cdi' 'generate' '--output=/var/run/cdi/nvidia.yaml'
-
-'grep' '  name:' '/etc/cdi/nvidia.yaml'
+'./install_apt.sh'
 
 './download_anaconda.sh'
 
-'apt-get' 'install' 'docker'
+'./setup_ctk.sh'
 
-'sudo' 'nvidia-ctk' 'runtime' 'configure' '--runtime=docker'
-
-'sudo' 'systemctl' 'restart' 'docker'
+systemctl 'restart' 'docker'
