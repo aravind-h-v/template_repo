@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added parts of nvidia container toolkit
+  Added code to run cuda 11.7 devel image
 #+end_src
 
 *** Files to add:
