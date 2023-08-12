@@ -4,16 +4,20 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added code to run cuda 11.7 devel image
+  Basic docker image working with cuda and anaconda
 #+end_src
 
 *** Files to add:
 #+begin_src conf :tangle git_add.txt
+  build.sh
+  Dockerfile
+  download_anaconda.sh
   get_repo.sh
   .gitignore
+  install.sh
   main.org
-  README.org
   nvidia_container_toolkit.org
+  README.org
 #+end_src
 
 
@@ -32,12 +36,13 @@
 #+begin_src conf :tangle .gitignore
   git_add.sh
   git_add.txt
+  message.txt
+  nvidia_docker_image/
   rm.sh
   rm.txt
-  tmp.sh
-  message.txt
   shrc_activate.sh
   shrc_install.sh
+  tmp.sh
 #+end_src
 
 ** The actual scripts to do the dirty work:
@@ -78,10 +83,16 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
+	new file:   Dockerfile
+	new file:   build.sh
+	new file:   download_anaconda.sh
+	new file:   install.sh
 	modified:   main.org
+	modified:   nvidia_container_toolkit.org
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
+	
 
 #+end_example
 
@@ -92,5 +103,5 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 9d33c51] Routine package stuff update
-:  2 files changed, 4 insertions(+), 6 deletions(-)
+: [main 4ac70b7] Added parts of nvidia container toolkit
+:  2 files changed, 20 insertions(+), 2 deletions(-)
