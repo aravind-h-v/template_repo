@@ -27,10 +27,11 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install
 *** Install Nvidia container toolkit:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
   sudo apt-get install -y \
-      'nvidia-container-toolkit-base' \
       'aria2' \
-      'zstd' \
       'cpio' \
+      'nvidia-container-toolkit' \
+      'nvidia-container-toolkit-base' \
+      'zstd' \
   ;
 #+end_src
 

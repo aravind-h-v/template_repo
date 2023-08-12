@@ -83,16 +83,13 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
+	modified:   .gitignore
 	new file:   Dockerfile
 	new file:   build.sh
 	new file:   download_anaconda.sh
 	new file:   install.sh
 	modified:   main.org
 	modified:   nvidia_container_toolkit.org
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	
 
 #+end_example
 
@@ -103,5 +100,9 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 4ac70b7] Added parts of nvidia container toolkit
-:  2 files changed, 20 insertions(+), 2 deletions(-)
+: [main 090fe36] Basic docker image working with cuda and anaconda
+:  7 files changed, 307 insertions(+), 19 deletions(-)
+:  create mode 100644 Dockerfile
+:  create mode 100755 build.sh
+:  create mode 100755 download_anaconda.sh
+:  create mode 100755 install.sh
