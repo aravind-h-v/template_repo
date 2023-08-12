@@ -9,7 +9,7 @@
 
 *** Files to add:
 #+begin_src conf :tangle git_add.txt
-  build.sh
+  build_docker.sh
   Dockerfile
   download_anaconda.sh
   get_repo.sh
@@ -19,9 +19,10 @@
   main.org
   nvidia_container_toolkit.org
   README.org
+  run_docker.sh
   setup_ctk.sh
+  setup_docker.sh
 #+end_src
-
 
 *** Files to remove:
 #+begin_src conf :tangle rm.txt
@@ -79,13 +80,14 @@
 
 #+RESULTS:
 #+begin_example
+removed '.#main.org'
 removed '.main.org.~undo-tree~'
-removed '.nvidia_container_toolkit.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
+	renamed:    build.sh -> build_docker.sh
 	modified:   install.sh
 	modified:   main.org
 	modified:   nvidia_container_toolkit.org
@@ -102,5 +104,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main a24f8e5] Basic docker image working with cuda and anaconda
-:  2 files changed, 10 insertions(+), 8 deletions(-)
+: [main 0628ff2] Minor reorganization
+:  5 files changed, 98 insertions(+), 90 deletions(-)
+:  rewrite install.sh (86%)
+:  create mode 100755 install_apt.sh
+:  create mode 100755 setup_ctk.sh

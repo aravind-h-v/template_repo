@@ -92,12 +92,12 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install
 ** Docker stuff:
 
 *** Restart docker:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
   systemctl 'restart' 'docker'
 #+end_src
 
 *** Full help for run:
-#+begin_src sh :shebang #!/usr/bin/sh :results output
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
   docker run --help
 #+end_src
 
@@ -270,12 +270,12 @@ Options:
 #+end_example
 
 *** Search for images:
-#+begin_src sh :shebang #!/usr/bin/sh :results output
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
   docker 'search' 'cuda'
 #+end_src
 
 *** Pull cuda 11.7 image:
-#+begin_src sh :shebang #!/usr/bin/sh :results output
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
   docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
 #+end_src
 
@@ -302,7 +302,7 @@ Options:
 #+end_src
 
 *** Build the docker file:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./build.sh
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./build_docker.sh
   cd "$('dirname' '--' "${0}")"
   mkdir -pv -- './nvidia_docker_image'
   cp -vf -- './Dockerfile' './nvidia_docker_image'
@@ -311,7 +311,7 @@ Options:
 #+end_src
 
 *** Interactively run commands:
-#+begin_src sh :shebang #!/usr/bin/sh :results output
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./run_docker.sh
   docker 'run' '--rm' '-it' '--runtime=nvidia' '--gpus' 'all' 'getting-started' 'fish'
 #+end_src
 
@@ -333,4 +333,3 @@ Options:
 #+begin_src sh :shebang #!/usr/bin/sh :results output
 'podman' 'run' '--rm' '--device' 'nvidia.com/gpu=all' 'ubuntu' 'nvidia-smi' '-L'
 #+end_src
-

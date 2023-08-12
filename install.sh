@@ -7,5 +7,3 @@ pwd
 './download_anaconda.sh'
 
 './setup_ctk.sh'
-
-systemctl 'restart' 'docker'
