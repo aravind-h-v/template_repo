@@ -80,7 +80,6 @@
 
 #+RESULTS:
 #+begin_example
-removed '.#main.org'
 removed '.main.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
@@ -91,9 +90,8 @@ Changes to be committed:
 	modified:   install.sh
 	modified:   main.org
 	modified:   nvidia_container_toolkit.org
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
+	new file:   run_docker.sh
+	new file:   setup_docker.sh
 
 #+end_example
 
@@ -104,8 +102,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 0628ff2] Minor reorganization
-:  5 files changed, 98 insertions(+), 90 deletions(-)
-:  rewrite install.sh (86%)
-:  create mode 100755 install_apt.sh
-:  create mode 100755 setup_ctk.sh
+: [main 774135e] Minor reorganization
+:  6 files changed, 26 insertions(+), 14 deletions(-)
+:  rename build.sh => build_docker.sh (100%)
+:  create mode 100755 run_docker.sh
+:  create mode 100755 setup_docker.sh

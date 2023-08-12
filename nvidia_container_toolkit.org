@@ -43,6 +43,23 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install
   ls 'Anaconda3-2023.07-2-Linux-x86_64.sh' || aria2c -c -x16 -j16 'https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh'
 #+end_src
 
+** Setup docker:
+
+*** Restart docker daemon:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  systemctl 'restart' 'docker'
+#+end_src
+
+*** Search for images:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  docker 'search' 'cuda'
+#+end_src
+
+*** Pull cuda 11.7 image:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
+#+end_src
+
 ** Nvidia CTK Related:
 
 *** Check version:
@@ -66,38 +83,34 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install
   nvidia-ctk 'runtime' 'configure' '--runtime=docker'
 #+end_src
 
-** Main install stuff:
+** The main dockerfile:
+#+begin_src conf :tangle ./Dockerfile
+  FROM nvidia/cuda:11.7.1-devel-ubuntu22.04
+  RUN apt-get update
+  RUN apt-get install -y fish fizsh build-essential aria2 cpio git-lfs squashfs-tools zstd
+  COPY 'Anaconda3-2023.07-2-Linux-x86_64.sh' /
+  RUN bash '/Anaconda3-2023.07-2-Linux-x86_64.sh' -b -p '/opt/anaconda'
+  RUN rm -vf -- '/Anaconda3-2023.07-2-Linux-x86_64.sh'
+#+end_src
 
-*** CD and location:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+** Build the docker file:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./build_docker.sh
   cd "$('dirname' '--' "${0}")"
-  pwd
+  mkdir -pv -- './nvidia_docker_image'
+  cp -vf -- './Dockerfile' './nvidia_docker_image'
+  cd './nvidia_docker_image'
+  docker build -t 'cuda_anaconda' .
 #+end_src
 
-*** Install apt dependencies:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
-  './install_apt.sh'
-#+end_src
-
-*** Run the script to download anaconda:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
-  './download_anaconda.sh'
-#+end_src
-
-*** Setup CTK:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
-  './setup_ctk.sh'
+** Interactively run commands:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./run_docker.sh
+  docker 'run' '--rm' '-it' '--runtime=nvidia' '--gpus' 'all' 'cuda_anaconda' 'fish'
 #+end_src
 
 ** Docker stuff:
 
-*** Restart docker:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  systemctl 'restart' 'docker'
-#+end_src
-
 *** Full help for run:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+#+begin_src sh :shebang #!/usr/bin/sh :results output
   docker run --help
 #+end_src
 
@@ -269,16 +282,6 @@ Options:
   -w, --workdir string                 Working directory inside the container
 #+end_example
 
-*** Search for images:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  docker 'search' 'cuda'
-#+end_src
-
-*** Pull cuda 11.7 image:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
-#+end_src
-
 *** Test:
 
 **** 1:
@@ -291,33 +294,42 @@ Options:
   docker 'run' '--rm' '--runtime=nvidia' '--gpus' 'all' 'nvidia/cuda:11.7.1-devel-ubuntu22.04' 'nvidia-smi'
 #+end_src
 
-*** The dockerfile:
-#+begin_src conf :tangle ./Dockerfile
-  FROM nvidia/cuda:11.7.1-devel-ubuntu22.04
-  RUN apt-get update
-  RUN apt-get install -y fish fizsh build-essential aria2 cpio git-lfs squashfs-tools zstd
-  COPY 'Anaconda3-2023.07-2-Linux-x86_64.sh' /
-  RUN bash '/Anaconda3-2023.07-2-Linux-x86_64.sh' -b -p '/opt/anaconda'
-  rm -vf -- '/Anaconda3-2023.07-2-Linux-x86_64.sh'
-#+end_src
-
-*** Build the docker file:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./build_docker.sh
-  cd "$('dirname' '--' "${0}")"
-  mkdir -pv -- './nvidia_docker_image'
-  cp -vf -- './Dockerfile' './nvidia_docker_image'
-  cd './nvidia_docker_image'
-  docker build -t getting-started .
-#+end_src
-
-*** Interactively run commands:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./run_docker.sh
-  docker 'run' '--rm' '-it' '--runtime=nvidia' '--gpus' 'all' 'getting-started' 'fish'
-#+end_src
-
 *** List images:
 #+begin_src sh :shebang #!/usr/bin/sh :results output
   docker image ls
+#+end_src
+
+** Main install stuff:
+
+*** CD and location:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  cd "$('dirname' '--' "${0}")"
+  pwd
+#+end_src
+
+*** Install apt dependencies:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  './install_apt.sh'
+#+end_src
+
+*** Run the script to download anaconda:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  './download_anaconda.sh'
+#+end_src
+
+*** Setup CTK:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  './setup_ctk.sh'
+#+end_src
+
+*** Setup docker:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  './setup_docker.sh'
+#+end_src
+
+*** Build docker image:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install.sh
+  './build_docker.sh'
 #+end_src
 
 ** COMMENT For PODMAN:
