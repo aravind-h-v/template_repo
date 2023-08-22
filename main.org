@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Minor reorganization
+  Fixed a silly typo
 #+end_src
 
 *** Files to add:
@@ -81,17 +81,19 @@
 #+RESULTS:
 #+begin_example
 removed '.main.org.~undo-tree~'
+removed '.nvidia_container_toolkit.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	renamed:    build.sh -> build_docker.sh
+	modified:   Dockerfile
+	modified:   build_docker.sh
 	modified:   install.sh
 	modified:   main.org
 	modified:   nvidia_container_toolkit.org
-	new file:   run_docker.sh
-	new file:   setup_docker.sh
+	modified:   run_docker.sh
+	modified:   setup_docker.sh
 
 #+end_example
 
@@ -102,8 +104,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main 774135e] Minor reorganization
-:  6 files changed, 26 insertions(+), 14 deletions(-)
-:  rename build.sh => build_docker.sh (100%)
-:  create mode 100755 run_docker.sh
-:  create mode 100755 setup_docker.sh
+: [main 0b8eef6] Minor reorganization
+:  7 files changed, 79 insertions(+), 67 deletions(-)
