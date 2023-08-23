@@ -1,0 +1,10 @@
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    'build-essential' \
+;
+
+COPY './Miniconda3-latest-Linux-x86_64.sh' /
+RUN /Miniconda3-latest-Linux-x86_64.sh -b -f -p /opt/miniconda

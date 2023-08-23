@@ -1,0 +1,51 @@
+* COMMENT Sample:
+#+begin_src sh :shebang #!/usr/bin/sh :results output
+  pwd
+#+end_src
+
+#+RESULTS:
+: /home/asd/GITHUB/aravind-h-v/template_repo/cuda117_miniconda3
+
+* Prepare in host:
+
+** Install dependencies on host:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./host_prepare.sh
+  sudo apt-get install aria2
+#+end_src
+
+** Download miniconda:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./host_prepare.sh
+  cd "$('dirname' '--' "${0}")"
+  mkdir -pv -- './prep_files'
+  cd './prep_files'
+  ls './Miniconda3-latest-Linux-x86_64.sh' || aria2c -c -x16 -j16 'https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh'
+  cd ..
+#+end_src
+
+* Docker stuff:
+
+** CUDA + Miniconda:
+
+*** Dockerfile:
+#+begin_src conf :tangle ./Dockerfile_base
+  FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu20.04
+
+  RUN DEBIAN_FRONTEND=noninteractive apt-get update
+
+  RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      'build-essential' \
+  ;
+
+  COPY './Miniconda3-latest-Linux-x86_64.sh' /
+  RUN /Miniconda3-latest-Linux-x86_64.sh -b -f -p /opt/miniconda
+#+end_src
+
+*** Run docker build:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./host_prepare.sh
+  cd "$('dirname' '--' "${0}")"
+  mkdir -pv -- './prep_files'
+  cp './Dockerfile_base' './prep_files/Dockerfile'
+  cd './prep_files'
+  sudo docker build -t 'cuda1171_cudnn8_miniconda3' .
+  cd ..
+#+end_src

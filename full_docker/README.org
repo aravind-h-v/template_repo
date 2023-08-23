@@ -1,0 +1,106 @@
+* Interesting links:
+
+** Docker on ubuntu:
+https://docs.docker.com/engine/install/ubuntu/
+
+** Nvidia container repo:
+https://gitlab.com/nvidia/container-images/cuda.git
+
+* COMMENT Sample:
+
+** Location:
+#+begin_src sh :shebang #!/usr/bin/sh :results output
+  pwd
+#+end_src
+
+#+RESULTS:
+: /home/asd/GITHUB/aravind-h-v/template_repo/full_docker
+
+* Main setup parts:
+
+** Uninstall all conflicting packages:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  sudo apt-get remove docker.io
+  sudo apt-get remove docker-doc
+  sudo apt-get remove docker-compose
+  sudo apt-get remove podman-docker
+  sudo apt-get remove containerd
+  sudo apt-get remove runc
+#+end_src
+
+** Update the =apt= package index and install packages to allow =apt= to use a repository over HTTPS:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  sudo apt-get update
+  sudo apt-get install ca-certificates curl gnupg
+#+end_src
+
+** Add Docker's official GPG key:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  sudo install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' \
+      | sudo gpg --dearmor -o '/etc/apt/keyrings/docker.gpg'
+  sudo chmod 'a+r' '/etc/apt/keyrings/docker.gpg'
+#+end_src
+
+** Command to set up the repository:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  echo \
+    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+#+end_src
+
+** Update the =apt= package index:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  sudo apt-get update
+#+end_src
+
+** Install the latest version:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  sudo apt-get install \
+      'docker-ce' \
+      'docker-ce-cli' \
+      'containerd.io' \
+      'docker-buildx-plugin' \
+      'docker-compose-plugin' \
+  ;
+#+end_src
+
+** Clone nvidia container repo:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./git_clone.sh
+  get_gitlab_repo(){
+      DIR_PREFIX="${HOME}/GITLAB/$(echo "${1}" | sed 's@https://gitlab.com/@@g ; s@.git$@@g')"
+
+      mkdir -pv -- "$('dirname' -- "${DIR_PREFIX}")" 
+
+      cd "$(dirname -- "${DIR_PREFIX}")" 
+
+      git clone "${1}"
+      cd "${DIR_PREFIX}"
+      git pull
+      git submodule update --init --recursive
+  }
+
+  get_gitlab_repo 'https://gitlab.com/nvidia/container-images/cuda.git'
+#+end_src
+
+#+RESULTS:
+: /home/asd/GITLAB/nvidia/container-images/cuda
+: /home/asd/GITLAB/nvidia/container-images
+
+** COMMENT Build docker image:
+
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./docker_build.sh
+  cd "${HOME}/GITLAB/nvidia/container-images/cuda"
+
+  # './build.sh' --help
+
+  sudo './build.sh' \
+      '-d' \
+      '--image-name' 'nvidia/cuda' \
+      '--cuda-version' '11.7.1' \
+      '--os' 'ubuntu' \
+      '--os-version' '20.04' \
+      '--arch' 'x86_64' \
+  ;
+#+end_src

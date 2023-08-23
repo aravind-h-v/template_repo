@@ -4,14 +4,22 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Fixed a silly typo
+  Added more docker stuff and method to install latest docker on debian like systems
 #+end_src
 
 *** Files to add:
 #+begin_src conf :tangle git_add.txt
   build_docker.sh
+  cuda117_miniconda3/Dockerfile_base
+  cuda117_miniconda3/host_prepare.sh
+  cuda117_miniconda3/prep_files
+  cuda117_miniconda3/README.org
   Dockerfile
   download_anaconda.sh
+  full_docker/apt_install_docker.sh
+  full_docker/docker_build.sh
+  full_docker/git_clone.sh
+  full_docker/README.org
   get_repo.sh
   .gitignore
   install_apt.sh
@@ -26,17 +34,24 @@
 
 *** Files to remove:
 #+begin_src conf :tangle rm.txt
-  .#main.org
-  .main.org.~undo-tree~
+  cuda117_miniconda3/README.org~
+  cuda117_miniconda3/.README.org.~undo-tree~
+  full_docker/#README.org#
+  full_docker/README.org~
+  full_docker/.README.org.~undo-tree~
   #main.org#
+  .#main.org
   main.org~
-  .README.org.~undo-tree~
-  .nvidia_container_toolkit.org.~undo-tree~
+  .main.org.~undo-tree~
   nvidia_container_toolkit.org~
+  .nvidia_container_toolkit.org.~undo-tree~
+  .README.org.~undo-tree~
 #+end_src
 
 *** Files to ignore:
 #+begin_src conf :tangle .gitignore
+  cuda117_miniconda3/prep_files/Dockerfile
+  cuda117_miniconda3/prep_files/Miniconda3-latest-Linux-x86_64.sh
   git_add.sh
   git_add.txt
   message.txt
@@ -67,33 +82,33 @@
   (save-buffer) 
   (save-some-buffers) 
   (org-babel-tangle)
+  (shell-command "./git_add.sh")
+  (shell-command "./rm.sh")
 #+end_src
 
 #+RESULTS:
 
 *** Run the git management parts:
 #+begin_src sh :shebang #!/bin/sh :results output
-  ./git_add.sh
-  ./rm.sh
   git status
 #+end_src
 
 #+RESULTS:
 #+begin_example
-removed '.main.org.~undo-tree~'
-removed '.nvidia_container_toolkit.org.~undo-tree~'
 On branch main
 Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   Dockerfile
-	modified:   build_docker.sh
-	modified:   install.sh
+	modified:   .gitignore
+	new file:   cuda117_miniconda3/Dockerfile_base
+	new file:   cuda117_miniconda3/README.org
+	new file:   cuda117_miniconda3/host_prepare.sh
+	new file:   full_docker/README.org
+	new file:   full_docker/apt_install_docker.sh
+	new file:   full_docker/docker_build.sh
+	new file:   full_docker/git_clone.sh
 	modified:   main.org
-	modified:   nvidia_container_toolkit.org
-	modified:   run_docker.sh
-	modified:   setup_docker.sh
 
 #+end_example
 
@@ -104,5 +119,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main 0b8eef6] Minor reorganization
-:  7 files changed, 79 insertions(+), 67 deletions(-)
+: [main b272c21] Fixed a silly typo
+:  3 files changed, 10 insertions(+), 11 deletions(-)

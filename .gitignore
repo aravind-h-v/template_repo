@@ -1,3 +1,5 @@
+cuda117_miniconda3/prep_files/Dockerfile
+cuda117_miniconda3/prep_files/Miniconda3-latest-Linux-x86_64.sh
 git_add.sh
 git_add.txt
 message.txt
