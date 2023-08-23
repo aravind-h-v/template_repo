@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Added more docker stuff and method to install latest docker on debian like systems
+  Fixed typo 2004 -> 2204
 #+end_src
 
 *** Files to add:
@@ -119,5 +119,12 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main b272c21] Fixed a silly typo
-:  3 files changed, 10 insertions(+), 11 deletions(-)
+: [main f8b0906] Added more docker stuff and method to install latest docker on debian like systems
+:  9 files changed, 274 insertions(+), 17 deletions(-)
+:  create mode 100644 cuda117_miniconda3/Dockerfile_base
+:  create mode 100644 cuda117_miniconda3/README.org
+:  create mode 100755 cuda117_miniconda3/host_prepare.sh
+:  create mode 100644 full_docker/README.org
+:  create mode 100755 full_docker/apt_install_docker.sh
+:  create mode 100755 full_docker/docker_build.sh
+:  create mode 100755 full_docker/git_clone.sh
