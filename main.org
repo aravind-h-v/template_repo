@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Fixed typo 2004 -> 2204
+  Minor fixing of full docker repo.
 #+end_src
 
 *** Files to add:
@@ -17,9 +17,8 @@
   Dockerfile
   download_anaconda.sh
   full_docker/apt_install_docker.sh
-  full_docker/docker_build.sh
-  full_docker/git_clone.sh
   full_docker/README.org
+  full_docker/setup_docker.sh
   get_repo.sh
   .gitignore
   install_apt.sh
@@ -100,14 +99,11 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   .gitignore
-	new file:   cuda117_miniconda3/Dockerfile_base
-	new file:   cuda117_miniconda3/README.org
-	new file:   cuda117_miniconda3/host_prepare.sh
-	new file:   full_docker/README.org
-	new file:   full_docker/apt_install_docker.sh
-	new file:   full_docker/docker_build.sh
-	new file:   full_docker/git_clone.sh
+	modified:   full_docker/README.org
+	modified:   full_docker/apt_install_docker.sh
+fatal: pathspec 'full_docker/docker_build.sh' did not match any files
+fatal: pathspec 'full_docker/git_clone.sh' did not match any files
+	new file:   full_docker/setup_docker.sh
 	modified:   main.org
 
 #+end_example
@@ -119,12 +115,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main f8b0906] Added more docker stuff and method to install latest docker on debian like systems
-:  9 files changed, 274 insertions(+), 17 deletions(-)
-:  create mode 100644 cuda117_miniconda3/Dockerfile_base
-:  create mode 100644 cuda117_miniconda3/README.org
-:  create mode 100755 cuda117_miniconda3/host_prepare.sh
-:  create mode 100644 full_docker/README.org
-:  create mode 100755 full_docker/apt_install_docker.sh
-:  create mode 100755 full_docker/docker_build.sh
-:  create mode 100755 full_docker/git_clone.sh
+: [main bf8741a] Fixed typo 2004 -> 2204
+:  3 files changed, 12 insertions(+), 5 deletions(-)

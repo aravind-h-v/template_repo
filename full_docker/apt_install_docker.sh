@@ -28,3 +28,11 @@ sudo apt-get install \
     'docker-buildx-plugin' \
     'docker-compose-plugin' \
 ;
+
+apt-get install -y \
+    'aria2' \
+    'cpio' \
+    'nvidia-container-toolkit' \
+    'nvidia-container-toolkit-base' \
+    'zstd' \
+;

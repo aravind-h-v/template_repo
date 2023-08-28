@@ -66,7 +66,56 @@ https://gitlab.com/nvidia/container-images/cuda.git
   ;
 #+end_src
 
-** Clone nvidia container repo:
+** Install Nvidia container toolkit:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  apt-get install -y \
+      'aria2' \
+      'cpio' \
+      'nvidia-container-toolkit' \
+      'nvidia-container-toolkit-base' \
+      'zstd' \
+  ;
+#+end_src
+
+** Restart docker daemon:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  systemctl 'restart' 'docker'
+#+end_src
+
+** Search for images:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  docker 'search' 'cuda'
+#+end_src
+
+** Pull cuda 11.7 image:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
+#+end_src
+
+** Nvidia CTK Related:
+
+*** Check version:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  nvidia-ctk '--version'
+#+end_src
+
+*** Generate configs:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  nvidia-ctk 'cdi' 'generate' '--output=/etc/cdi/nvidia.yaml'
+  nvidia-ctk 'cdi' 'generate' '--output=/var/run/cdi/nvidia.yaml'
+#+end_src
+
+*** Check generated file:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  grep '  name:' '/etc/cdi/nvidia.yaml'
+#+end_src
+
+*** Configure for docker:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  nvidia-ctk 'runtime' 'configure' '--runtime=docker'
+#+end_src
+
+** COMMENT Clone nvidia container repo:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./git_clone.sh
   get_gitlab_repo(){
       DIR_PREFIX="${HOME}/GITLAB/$(echo "${1}" | sed 's@https://gitlab.com/@@g ; s@.git$@@g')"
@@ -93,8 +142,6 @@ https://gitlab.com/nvidia/container-images/cuda.git
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./docker_build.sh
   cd "${HOME}/GITLAB/nvidia/container-images/cuda"
 
-  # './build.sh' --help
-
   sudo './build.sh' \
       '-d' \
       '--image-name' 'nvidia/cuda' \
@@ -104,3 +151,14 @@ https://gitlab.com/nvidia/container-images/cuda.git
       '--arch' 'x86_64' \
   ;
 #+end_src
+
+* Make all the changes and check status:
+
+** This file stuff:
+#+begin_src emacs-lisp :results output
+  (save-buffer) 
+  (save-some-buffers) 
+  (org-babel-tangle)
+#+end_src
+
+#+RESULTS:
