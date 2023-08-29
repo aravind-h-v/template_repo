@@ -18,7 +18,24 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 * Main setup parts:
 
-** Uninstall all conflicting packages:
+** Install basic stuff:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+  apt-get install -y \
+      'aria2' \
+      'build-essential' \
+      'cpio' \
+      'fish' \
+      'fizsh' \
+      'git' \
+      'git-lfs' \
+      'squashfs-tools' \
+      'zstd' \
+  ;
+#+end_src
+
+** Docker related stuff:
+
+*** Uninstall all conflicting packages:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo apt-get remove docker.io
   sudo apt-get remove docker-doc
@@ -28,13 +45,13 @@ https://gitlab.com/nvidia/container-images/cuda.git
   sudo apt-get remove runc
 #+end_src
 
-** Update the =apt= package index and install packages to allow =apt= to use a repository over HTTPS:
+*** Update the =apt= package index and install packages to allow =apt= to use a repository over HTTPS:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo apt-get update
   sudo apt-get install ca-certificates curl gnupg
 #+end_src
 
-** Add Docker's official GPG key:
+*** Add Docker's official GPG key:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo install -m 0755 -d /etc/apt/keyrings
   curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' \
@@ -42,7 +59,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
   sudo chmod 'a+r' '/etc/apt/keyrings/docker.gpg'
 #+end_src
 
-** Command to set up the repository:
+*** Set up the repository:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   echo \
     "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
@@ -50,12 +67,12 @@ https://gitlab.com/nvidia/container-images/cuda.git
     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 #+end_src
 
-** Update the =apt= package index:
+*** Update the =apt= package index:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo apt-get update
 #+end_src
 
-** Install the latest version:
+*** Install the latest version of docker:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo apt-get install \
       'docker-ce' \
@@ -69,11 +86,8 @@ https://gitlab.com/nvidia/container-images/cuda.git
 ** Install Nvidia container toolkit:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   apt-get install -y \
-      'aria2' \
-      'cpio' \
       'nvidia-container-toolkit' \
       'nvidia-container-toolkit-base' \
-      'zstd' \
   ;
 #+end_src
 
@@ -152,7 +166,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
   ;
 #+end_src
 
-* Make all the changes and check status:
+* COMMENT Make all the changes and check status:
 
 ** This file stuff:
 #+begin_src emacs-lisp :results output

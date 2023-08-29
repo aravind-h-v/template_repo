@@ -1,4 +1,16 @@
 #!/usr/bin/sh
+apt-get install -y \
+    'aria2' \
+    'build-essential' \
+    'cpio' \
+    'fish' \
+    'fizsh' \
+    'git' \
+    'git-lfs' \
+    'squashfs-tools' \
+    'zstd' \
+;
+
 sudo apt-get remove docker.io
 sudo apt-get remove docker-doc
 sudo apt-get remove docker-compose
@@ -30,9 +42,6 @@ sudo apt-get install \
 ;
 
 apt-get install -y \
-    'aria2' \
-    'cpio' \
     'nvidia-container-toolkit' \
     'nvidia-container-toolkit-base' \
-    'zstd' \
 ;
