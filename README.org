@@ -76,7 +76,6 @@ LOGO=distributor-logo-pop-os
 : 
 
 ** Verify the System has the Correct Kernel Headers and Development Packages Installed:
-
 #+begin_src sh :shebang #!/bin/sh :results output
   uname -r
 #+end_src

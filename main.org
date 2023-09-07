@@ -29,6 +29,9 @@
   run_docker.sh
   setup_ctk.sh
   setup_docker.sh
+  full_docker/apt_install_general.sh
+  full_docker/apt_install_nvidia.sh
+  full_docker/full_install.sh
 #+end_src
 
 *** Files to remove:
@@ -99,12 +102,14 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
+	modified:   README.org
 	modified:   full_docker/README.org
 	modified:   full_docker/apt_install_docker.sh
-	deleted:    full_docker/docker_build.sh
-	deleted:    full_docker/git_clone.sh
-	new file:   full_docker/setup_docker.sh
+	modified:   full_docker/setup_docker.sh
 	modified:   main.org
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
 #+end_example
 
@@ -115,8 +120,5 @@ Changes to be committed:
 #+end_src
 
 #+RESULTS:
-: [main f001ec8] Minor fixing of full docker repo.
-:  6 files changed, 93 insertions(+), 51 deletions(-)
-:  delete mode 100755 full_docker/docker_build.sh
-:  delete mode 100755 full_docker/git_clone.sh
-:  create mode 100755 full_docker/setup_docker.sh
+: [main 100e7e1] Minor fixing of full docker repo.
+:  3 files changed, 43 insertions(+), 17 deletions(-)

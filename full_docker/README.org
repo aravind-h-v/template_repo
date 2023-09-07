@@ -18,8 +18,18 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 * Main setup parts:
 
+** Verify You Have a CUDA-Capable GPU:
+#+begin_src sh :shebang #!/bin/sh :results output
+  lspci | grep -i nvidia
+#+end_src
+
+** Verify You Have a Supported Version of Linux:
+#+begin_src sh :shebang #!/bin/sh :results output
+  uname -m && cat /etc/*release
+#+end_src
+
 ** Install basic stuff:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_general.sh
   apt-get install -y \
       'aria2' \
       'build-essential' \
@@ -33,7 +43,54 @@ https://gitlab.com/nvidia/container-images/cuda.git
   ;
 #+end_src
 
-** Docker related stuff:
+** Verify the System Has gcc Installed:
+#+begin_src sh :shebang #!/bin/sh :results output
+  gcc --version
+#+end_src
+
+** Verify the System has the Correct Kernel Headers and Development Packages Installed:
+#+begin_src sh :shebang #!/bin/sh :results output
+  uname -r
+#+end_src
+
+** Installing NVIDIA's repo for latest GPU drivers and cuda:
+
+*** Remove Outdated Signing Key:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+  sudo apt-key del 7fa2af80
+#+end_src
+
+*** Enroll the new signing key manually:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  wget "https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/cuda-keyring_1.1-1_all.deb"
+  sudo dpkg -i 'cuda-keyring_1.1-1_all.deb'
+#+end_src
+
+*** Write the repo:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  echo "deb [signed-by=/usr/share/keyrings/cuda-archive-keyring.gpg] https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/ /" > "/etc/apt/sources.list.d/cuda-${DISTRO}-${ARCH}.list"
+#+end_src
+
+*** Pin the repo:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+  DISTRO='ubuntu2204'
+  ARCH='x86_64'
+  wget "https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}/cuda-${DISTRO}.pin"
+  sudo mv "cuda-${DISTRO}.pin" '/etc/apt/preferences.d/cuda-repository-pin-600'
+#+end_src
+
+*** Update and install:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+  sudo apt-get update
+  sudo apt-get install cuda
+  sudo apt-get install cuda-toolkit
+#+end_src
+
+** Installing latest docker stuff:
 
 *** Uninstall all conflicting packages:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
@@ -53,18 +110,14 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 *** Add Docker's official GPG key:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
-  sudo install -m 0755 -d /etc/apt/keyrings
-  curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' \
-      | sudo gpg --dearmor -o '/etc/apt/keyrings/docker.gpg'
+  sudo install -m 0755 -d '/etc/apt/keyrings'
+  curl -fsSL 'https://download.docker.com/linux/ubuntu/gpg' | sudo gpg --dearmor -o '/etc/apt/keyrings/docker.gpg'
   sudo chmod 'a+r' '/etc/apt/keyrings/docker.gpg'
 #+end_src
 
 *** Set up the repository:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
-  echo \
-    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-    "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list
 #+end_src
 
 *** Update the =apt= package index:
@@ -129,41 +182,13 @@ https://gitlab.com/nvidia/container-images/cuda.git
   nvidia-ctk 'runtime' 'configure' '--runtime=docker'
 #+end_src
 
-** COMMENT Clone nvidia container repo:
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./git_clone.sh
-  get_gitlab_repo(){
-      DIR_PREFIX="${HOME}/GITLAB/$(echo "${1}" | sed 's@https://gitlab.com/@@g ; s@.git$@@g')"
-
-      mkdir -pv -- "$('dirname' -- "${DIR_PREFIX}")" 
-
-      cd "$(dirname -- "${DIR_PREFIX}")" 
-
-      git clone "${1}"
-      cd "${DIR_PREFIX}"
-      git pull
-      git submodule update --init --recursive
-  }
-
-  get_gitlab_repo 'https://gitlab.com/nvidia/container-images/cuda.git'
-#+end_src
-
-#+RESULTS:
-: /home/asd/GITLAB/nvidia/container-images/cuda
-: /home/asd/GITLAB/nvidia/container-images
-
-** COMMENT Build docker image:
-
-#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./docker_build.sh
-  cd "${HOME}/GITLAB/nvidia/container-images/cuda"
-
-  sudo './build.sh' \
-      '-d' \
-      '--image-name' 'nvidia/cuda' \
-      '--cuda-version' '11.7.1' \
-      '--os' 'ubuntu' \
-      '--os-version' '20.04' \
-      '--arch' 'x86_64' \
-  ;
+** Install full:
+#+begin_src sh :shebang #!/bin/sh :results output :tangle ./full_install.sh
+  './apt_install_general.sh'
+  './apt_install_nvidia.sh'
+  './apt_install_docker.sh'
+  './setup_docker.sh'
+  exit '0'
 #+end_src
 
 * COMMENT Make all the changes and check status:
@@ -176,3 +201,21 @@ https://gitlab.com/nvidia/container-images/cuda.git
 #+end_src
 
 #+RESULTS:
+
+* Sample:
+
+** General:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_general.sh
+#+end_src
+
+** Nvidia:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
+#+end_src
+
+** Docker:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
+#+end_src
+
+** Setup docker:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+#+end_src
