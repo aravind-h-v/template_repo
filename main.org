@@ -107,12 +107,9 @@ Changes to be committed:
 	modified:   full_docker/apt_install_docker.sh
 	modified:   full_docker/apt_install_general.sh
 	modified:   full_docker/apt_install_nvidia.sh
+	new file:   full_docker/install_rust.sh
 	modified:   full_docker/setup_docker.sh
 	modified:   main.org
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-	
 
 #+end_example
 
@@ -123,8 +120,7 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 22212ae] Minor fixing of full docker repo.
-:  8 files changed, 146 insertions(+), 72 deletions(-)
-:  create mode 100755 full_docker/apt_install_general.sh
-:  create mode 100755 full_docker/apt_install_nvidia.sh
-:  create mode 100755 full_docker/full_install.sh
+: [main 3d0f57c] Fully working docker setup from scratch.
+:  7 files changed, 99 insertions(+), 44 deletions(-)
+:  create mode 100755 full_docker/install_rust.sh
+:  rewrite full_docker/setup_docker.sh (83%)

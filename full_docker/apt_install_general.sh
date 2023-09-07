@@ -12,5 +12,3 @@ sudo apt-get install -y \
     'squashfs-tools' \
     'zstd' \
 ;
-
-

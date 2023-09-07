@@ -29,5 +29,3 @@ sudo apt-get install -y \
     'nvidia-container-toolkit' \
     'nvidia-container-toolkit-base' \
 ;
-
-

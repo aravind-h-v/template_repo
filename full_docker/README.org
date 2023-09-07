@@ -224,6 +224,7 @@ Now we are ready to build and run any docker container.
 ** Script to run the whole thing automatically:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./full_install.sh
   './apt_install_general.sh'
+  './install_rust.sh'
   './apt_install_nvidia.sh'
   './apt_install_docker.sh'
   './setup_docker.sh'
@@ -241,7 +242,7 @@ Now we are ready to build and run any docker container.
 
 #+RESULTS:
 
-* Sample:
+* COMMENT Sample:
 
 ** General:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_general.sh

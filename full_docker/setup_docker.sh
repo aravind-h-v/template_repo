@@ -17,5 +17,3 @@ sudo nvidia-ctk 'runtime' 'configure' '--runtime=docker'
 sudo systemctl restart docker
 
 sudo docker 'run' '--rm' '--runtime=nvidia' '--gpus' 'all' 'nvidia/cuda:11.7.1-devel-ubuntu22.04' 'nvidia-smi'
-
-
