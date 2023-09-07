@@ -1,5 +1,7 @@
 #!/usr/bin/sh
-apt-get install -y \
+sudo apt-get update
+
+sudo apt-get install -y \
     'aria2' \
     'build-essential' \
     'cpio' \

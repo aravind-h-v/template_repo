@@ -16,7 +16,6 @@ wget "https://developer.download.nvidia.com/compute/cuda/repos/${DISTRO}/${ARCH}
 sudo mv "cuda-${DISTRO}.pin" '/etc/apt/preferences.d/cuda-repository-pin-600'
 
 sudo apt-get update
-sudo apt-get install cuda
-sudo apt-get install cuda-toolkit
+sudo apt-get install -y cuda cuda-toolkit
 
 

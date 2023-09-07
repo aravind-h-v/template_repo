@@ -30,7 +30,9 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 ** Install basic stuff:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_general.sh
-  apt-get install -y \
+  sudo apt-get update
+
+  sudo apt-get install -y \
       'aria2' \
       'build-essential' \
       'cpio' \
@@ -41,6 +43,32 @@ https://gitlab.com/nvidia/container-images/cuda.git
       'squashfs-tools' \
       'zstd' \
   ;
+#+end_src
+
+** COMMENT Change default shell to fish for easier interactive use (optional):
+#+begin_src sh :shebang #!/usr/bin/sh :results output
+  sudo chsh -s '/usr/bin/fish' ubuntu
+#+end_src
+
+** Install rust (optional):
+
+*** Main link:
+https://www.rust-lang.org/tools/install
+
+*** Script to install:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install_rust.sh
+  curl --proto '=https' --tlsv1.2 -sSf 'https://sh.rustup.rs' | sh
+#+end_src
+
+*** Script to activate cargo:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./install_rust.sh
+  . "${HOME}/.cargo/env"
+  cargo install zellij
+#+end_src
+
+*** Script to start zellij:
+#+begin_src sh :shebang #!/usr/bin/sh :results output
+  zellij attach --create
 #+end_src
 
 ** Verify the System Has gcc Installed:
@@ -86,8 +114,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
 *** Update and install:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_nvidia.sh
   sudo apt-get update
-  sudo apt-get install cuda
-  sudo apt-get install cuda-toolkit
+  sudo apt-get install -y cuda cuda-toolkit
 #+end_src
 
 ** Installing latest docker stuff:
@@ -105,7 +132,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
 *** Update the =apt= package index and install packages to allow =apt= to use a repository over HTTPS:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
   sudo apt-get update
-  sudo apt-get install ca-certificates curl gnupg
+  sudo apt-get install -y ca-certificates curl gnupg
 #+end_src
 
 *** Add Docker's official GPG key:
@@ -127,7 +154,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 *** Install the latest version of docker:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
-  sudo apt-get install \
+  sudo apt-get install -y \
       'docker-ce' \
       'docker-ce-cli' \
       'containerd.io' \
@@ -138,7 +165,7 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 ** Install Nvidia container toolkit:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./apt_install_docker.sh
-  apt-get install -y \
+  sudo apt-get install -y \
       'nvidia-container-toolkit' \
       'nvidia-container-toolkit-base' \
   ;
@@ -146,30 +173,30 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 ** Restart docker daemon:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  systemctl 'restart' 'docker'
+  sudo systemctl 'restart' 'docker'
 #+end_src
 
 ** Search for images:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  docker 'search' 'cuda'
+  sudo docker 'search' 'cuda'
 #+end_src
 
 ** Pull cuda 11.7 image:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
+  sudo docker 'pull' 'nvidia/cuda:11.7.1-devel-ubuntu22.04'
 #+end_src
 
 ** Nvidia CTK Related:
 
 *** Check version:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  nvidia-ctk '--version'
+  sudo nvidia-ctk '--version'
 #+end_src
 
 *** Generate configs:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  nvidia-ctk 'cdi' 'generate' '--output=/etc/cdi/nvidia.yaml'
-  nvidia-ctk 'cdi' 'generate' '--output=/var/run/cdi/nvidia.yaml'
+  sudo nvidia-ctk 'cdi' 'generate' '--output=/etc/cdi/nvidia.yaml'
+  sudo nvidia-ctk 'cdi' 'generate' '--output=/var/run/cdi/nvidia.yaml'
 #+end_src
 
 *** Check generated file:
@@ -179,10 +206,22 @@ https://gitlab.com/nvidia/container-images/cuda.git
 
 *** Configure for docker:
 #+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
-  nvidia-ctk 'runtime' 'configure' '--runtime=docker'
+  sudo nvidia-ctk 'runtime' 'configure' '--runtime=docker'
 #+end_src
 
-** Install full:
+*** Restart docker daemon:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  sudo systemctl restart docker
+#+end_src
+
+*** Try running sample command inside:
+#+begin_src sh :shebang #!/usr/bin/sh :results output :tangle ./setup_docker.sh
+  sudo docker 'run' '--rm' '--runtime=nvidia' '--gpus' 'all' 'nvidia/cuda:11.7.1-devel-ubuntu22.04' 'nvidia-smi'
+#+end_src
+This command should succeed and produce the same output as running =nvidia-smi= on the host.
+Now we are ready to build and run any docker container.
+
+** Script to run the whole thing automatically:
 #+begin_src sh :shebang #!/bin/sh :results output :tangle ./full_install.sh
   './apt_install_general.sh'
   './apt_install_nvidia.sh'

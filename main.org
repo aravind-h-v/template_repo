@@ -4,7 +4,7 @@
 
 *** The commit message:
 #+begin_src conf :tangle message.txt
-  Minor fixing of full docker repo.
+  Fully working docker setup from scratch.
 #+end_src
 
 *** Files to add:
@@ -17,6 +17,10 @@
   Dockerfile
   download_anaconda.sh
   full_docker/apt_install_docker.sh
+  full_docker/apt_install_general.sh
+  full_docker/apt_install_nvidia.sh
+  full_docker/full_install.sh
+  full_docker/install_rust.sh
   full_docker/README.org
   full_docker/setup_docker.sh
   get_repo.sh
@@ -29,9 +33,6 @@
   run_docker.sh
   setup_ctk.sh
   setup_docker.sh
-  full_docker/apt_install_general.sh
-  full_docker/apt_install_nvidia.sh
-  full_docker/full_install.sh
 #+end_src
 
 *** Files to remove:
@@ -102,14 +103,16 @@ Your branch is up to date with 'origin/main'.
 
 Changes to be committed:
   (use "git restore --staged <file>..." to unstage)
-	modified:   README.org
 	modified:   full_docker/README.org
 	modified:   full_docker/apt_install_docker.sh
+	modified:   full_docker/apt_install_general.sh
+	modified:   full_docker/apt_install_nvidia.sh
 	modified:   full_docker/setup_docker.sh
 	modified:   main.org
 
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
+	
 
 #+end_example
 
@@ -120,5 +123,8 @@ Untracked files:
 #+end_src
 
 #+RESULTS:
-: [main 100e7e1] Minor fixing of full docker repo.
-:  3 files changed, 43 insertions(+), 17 deletions(-)
+: [main 22212ae] Minor fixing of full docker repo.
+:  8 files changed, 146 insertions(+), 72 deletions(-)
+:  create mode 100755 full_docker/apt_install_general.sh
+:  create mode 100755 full_docker/apt_install_nvidia.sh
+:  create mode 100755 full_docker/full_install.sh
